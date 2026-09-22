@@ -1,150 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Personalized Learning Platform</title>
-  <style>
-    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #f1f5f9; margin: 0; padding: 20px; color: #1e293b; }
-    
-    .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-    h1 { margin-top: 0; color: #0f172a; text-align: center; }
-    
-    /* Stats Bar */
-    .stats-bar { display: flex; justify-content: space-around; background: #e0e7ff; padding: 15px; border-radius: 12px; margin-bottom: 25px; }
-    .stat-item { text-align: center; }
-    .stat-value { font-size: 1.4rem; font-weight: bold; color: #4338ca; }
-    
-    /* Drag & Drop Upload Zone */
-    .drop-zone {
-      border: 2px dashed #6366f1;
-      border-radius: 12px;
-      padding: 40px 20px;
-      text-align: center;
-      background-color: #faf5ff;
-      cursor: pointer;
-      transition: all 0.2s ease-in-out;
-    }
-    .drop-zone.drag-active {
-      border-color: #4338ca;
-      background-color: #e0e7ff;
-      transform: scale(1.02);
-    }
-    .drop-icon { font-size: 3rem; margin-bottom: 10px; }
-    .drop-title { font-size: 1.1rem; font-weight: 600; color: #334155; margin: 0; }
-    .drop-sub { font-size: 0.875rem; color: #64748b; margin-top: 5px; }
 
-    /* Resource List */
-    .resource-list { margin-top: 30px; }
-    .resource-card { background: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-    .badge { background: #10b981; color: white; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; }
-  </style>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Personalized Learning Platform</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            margin: 0;
+            padding: 20px;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #0f172a;
+            text-align: center;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4338ca;
+        }
+
+        /* Drag & Drop Upload Zone */
+        .drop-zone {
+            border: 2px dashed #6366f1;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            background-color: #faf5ff;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .drop-zone.drag-active {
+            border-color: #4338ca;
+            background-color: #e0e7ff;
+            transform: scale(1.02);
+        }
+
+        .drop-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .drop-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #334155;
+            margin: 0;
+        }
+
+        .drop-sub {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-top: 5px;
+        }
+
+        /* Resource List */
+        .resource-list {
+            margin-top: 30px;
+        }
+
+        .resource-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            background: #10b981;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
-  <div class="container">
-    <h1>📚 AI Personalized Learning Platform</h1>
-    
-    <!-- User Stats -->
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div>Credits Earned</div>
-        <div class="stat-value" id="credit-count">150</div>
-      </div>
-      <div class="stat-item">
-        <div>Uploaded Resources</div>
-        <div class="stat-value" id="resource-count">0</div>
-      </div>
+    <div class="container">
+        <h1>📚 AI Personalized Learning Platform</h1>
+
+        <!-- User Stats -->
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div>Credits Earned</div>
+                <div class="stat-value" id="credit-count">150</div>
+            </div>
+            <div class="stat-item">
+                <div>Uploaded Resources</div>
+                <div class="stat-value" id="resource-count">0</div>
+            </div>
+        </div>
+
+        <!-- Drag & Drop Upload Area -->
+        <div id="drop-zone" class="drop-zone">
+            <div class="drop-icon">📁</div>
+            <p class="drop-title">Drag & drop your study resource here</p>
+            <p class="drop-sub">or click to browse from your computer (.pdf, .txt, .docx)</p>
+            <input type="file" id="file-input" hidden accept=".pdf,.doc,.docx,.txt" />
+        </div>
+
+        <!-- Resources List -->
+        <div class="resource-list">
+            <h3>Uploaded Resources</h3>
+            <div id="resources-container">
+                <p style="color: #94a3b8; text-align: center;">No resources uploaded yet. Drag a file above to earn
+                    credits!</p>
+            </div>
+        </div>
     </div>
 
-    <!-- Drag & Drop Upload Area -->
-    <div id="drop-zone" class="drop-zone">
-      <div class="drop-icon">📁</div>
-      <p class="drop-title">Drag & drop your study resource here</p>
-      <p class="drop-sub">or click to browse from your computer (.pdf, .txt, .docx)</p>
-      <input type="file" id="file-input" hidden accept=".pdf,.doc,.docx,.txt" />
-    </div>
+    <script>
+        let credits = 150;
+        let resourceCount = 0;
 
-    <!-- Resources List -->
-    <div class="resource-list">
-      <h3>Uploaded Resources</h3>
-      <div id="resources-container">
-        <p style="color: #94a3b8; text-align: center;">No resources uploaded yet. Drag a file above to earn credits!</p>
-      </div>
-    </div>
-  </div>
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const resourcesContainer = document.getElementById('resources-container');
+        const creditCountEl = document.getElementById('credit-count');
+        const resourceCountEl = document.getElementById('resource-count');
 
-  <script>
-    let credits = 150;
-    let resourceCount = 0;
+        // 1. Prevent default browser behavior on file drag
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
 
-    const dropZone = document.getElementById('drop-zone');
-    const fileInput = document.getElementById('file-input');
-    const resourcesContainer = document.getElementById('resources-container');
-    const creditCountEl = document.getElementById('credit-count');
-    const resourceCountEl = document.getElementById('resource-count');
+        // 2. Add drag-over styling
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'));
+        });
 
-    // 1. Prevent default browser behavior on file drag
-    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-      dropZone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      });
-    });
+        // 3. Remove drag-over styling when drag ends
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'));
+        });
 
-    // 2. Add drag-over styling
-    ['dragenter', 'dragover'].forEach(eventName => {
-      dropZone.addEventListener(eventName, () => dropZone.classList.add('drag-active'));
-    });
+        // 4. Handle file drop
+        dropZone.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processUploadedFile(files[0]);
+            }
+        });
 
-    // 3. Remove drag-over styling when drag ends
-    ['dragleave', 'drop'].forEach(eventName => {
-      dropZone.addEventListener(eventName, () => dropZone.classList.remove('drag-active'));
-    });
+        // 5. Handle manual click upload
+        dropZone.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                processUploadedFile(e.target.files[0]);
+            }
+        });
 
-    // 4. Handle file drop
-    dropZone.addEventListener('drop', (e) => {
-      const files = e.dataTransfer.files;
-      if (files.length > 0) {
-        processUploadedFile(files[0]);
-      }
-    });
+        // 6. Function to process upload and award credits
+        function processUploadedFile(file) {
+            // Clear empty state text on first upload
+            if (resourceCount === 0) {
+                resourcesContainer.innerHTML = '';
+            }
 
-    // 5. Handle manual click upload
-    dropZone.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', (e) => {
-      if (e.target.files.length > 0) {
-        processUploadedFile(e.target.files[0]);
-      }
-    });
+            // Update counters & credits
+            resourceCount++;
+            credits += 25; // Award 25 credits per resource upload
 
-    // 6. Function to process upload and award credits
-    function processUploadedFile(file) {
-      // Clear empty state text on first upload
-      if (resourceCount === 0) {
-        resourcesContainer.innerHTML = '';
-      }
+            creditCountEl.textContent = credits;
+            resourceCountEl.textContent = resourceCount;
 
-      // Update counters & credits
-      resourceCount++;
-      credits += 25; // Award 25 credits per resource upload
-
-      creditCountEl.textContent = credits;
-      resourceCountEl.textContent = resourceCount;
-
-      // Add resource card to list
-      const card = document.createElement('div');
-      card.className = 'resource-card';
-      card.innerHTML = `
+            // Add resource card to list
+            const card = document.createElement('div');
+            card.className = 'resource-card';
+            card.innerHTML = `
         <div>
           <strong>📄 ${file.name}</strong>
           <div style="font-size: 0.8rem; color: #64748b;">${(file.size / 1024).toFixed(1)} KB</div>
         </div>
         <span class="badge">+25 Credits</span>
       `;
-      resourcesContainer.prepend(card);
-    }
-  </script>
+            resourcesContainer.prepend(card);
+        }
+    </script>
 </body>
+
 </html>
